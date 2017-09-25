@@ -6,4 +6,5 @@
 - 人生格言：[ 做一个决定，并不难，难的是付诸行动，并且坚持到底 ]
 
 --------------------
-hzqing-centos-proxy-v0.1.sh  自动配置centos系统代理，yum代理，wegt代理。
+
+- hzqing-centos-proxy-v0.1.sh  自动配置centos系统代理，yum代理，wegt代理。
