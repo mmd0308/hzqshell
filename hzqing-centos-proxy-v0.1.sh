@@ -31,16 +31,21 @@ echo "#################################################################"
 echo "废话不多说，下面开始配置"
 echo "                        "
 #获取代理
-read -p "请先输入代理（eg:http://hzqing.com:8080)" hproxy
-echo "你输入的代理是：$hproxy"
+#read -p "请先输入代理（eg:http://hzqing.com:8080): " hproxy
+#echo "你输入的代理是：$hproxy"
 
-read -p "请确认输入是否正确(y/n)? " istrue
-while  [ $istrue != 'y' ] || [ $istrue != 'Y' ]
+#read -p "请确认输入是否正确(y/n)? " istrue
+
+while  [ 1 -eq 1 ]
 do
-read -p "请先输入代理（eg:http://hzqing.com:8080)" hproxy
+read -p "请先输入代理（eg:http://hzqing.com:8080): " hproxy
 echo "你输入的代理是：$hproxy"
 
 read -p "请确认输入是否正确(y/n)? " istrue
+if [ $istrue == 'y' ] || [ $istrue == 'Y' ]
+then
+break 1
+fi
 
 done
 
@@ -50,24 +55,19 @@ echo "11你输入的代理是：$hproxy"
 read -t 10 -s -p "请在10秒内输入root用户的密码: " rootpd
 
 
-
-
 #配置系统代理
-sysproxy=/home/hzq/linux/profile
-#sysproxy=/etc/profile
+#sysproxy=/home/hzq/linux/profile
+sysproxy=/etc/profile
+echo "  "
 
 read -p "是否设置系统变量（y/n)?" issysproxy
-
-echo "你输入的是 $issysproxy"
 
 if [ $issysproxy == 'y' ] || [ $issysproxy == 'Y' ]
 then
 
 echo "配置系统代理start..."
-
-sudo echo "export http_proxy=$hproxy" >> $sysproxy
-sudo echo "export ftp_proxy=$hproxy" >> $sysproxy
-echo $?
+echo $rootpd | sudo echo "#######################配置系统代理################" >> $sysproxy
+echo $rootpd | sudo echo "export http_proxy=$hproxy" >> $sysproxy
 echo "配置系统代理stop..."
 
 fi
@@ -75,16 +75,22 @@ fi
 ############################################################################################################################################################
 #配置yum代理
 
-#yumproxy=/etc/yum.conf
-yumproxy=$sysproxy
+yumproxy=/etc/yum.conf
+#yumproxy=$sysproxy
+
+read -p "是否配置yum仓代理(y/n)? " isyumproxy
+
+if [ $isyumproxy == 'y' ] || [ $isyumproxy == 'Y' ]
+then
 
 echo "配置yum代理start"
 
 #proxy=http://username:password@proxy_ip:port/ 
-sudo echo "proxy=$hproxy" >> $yumproxy
+echo $rootpd | sudo echo "############配置yum代理##################" >> $yumproxy
+echo $rootpd | sudo echo "proxy=$hproxy" >> $yumproxy
 
 echo "配置yum代理end..."
-
+fi
 ############################################################################################################################################################
 ############################################################################################################################################################
 #
@@ -92,15 +98,22 @@ echo "配置yum代理end..."
 #配置wget代理
 #############################################
 #开启配置wget代理
-#wgetproxy=/etc/wgetrc
+wgetproxy=/etc/wgetrc
 #############################################
 #测试shell脚本用的
-wgetproxy=$sysproxy
+#wgetproxy=$sysproxy
 
-sudo echo "use_proxy = on" >> $wgetproxy
-sudo echo "http_proxy=$hproxy" >> $wgetproxy
-sudo echo "ftp_proxy=$hproxy" >> $wgetproxy
+read -p "是否配置wget代理(y/n) :" iswgetproxy
 
+if [ $iswgetproxy == 'y' ] || [ $iswgetproxy == 'Y' ]
+then
+echo "开始配置wegt代理"
+echo $rootpd | sudo echo "######配置wget代理####" >> $wgetproxy
+echo $rootpd | sudo echo "use_proxy = on" >> $wgetproxy
+echo $rootpd | sudo echo "http_proxy=$hproxy" >> $wgetproxy
+echo $rootpd | sudo echo "ftp_proxy=$hproxy" >> $wgetproxy
+echo "wget代理配置结束"
+fi
 
 ############################################################################################################################################################
 ############################################################################################################################################################
